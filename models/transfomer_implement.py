@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import math
 from .transformer import Transformer
+from .positional_encoding import PositionalEncoding
 from utils import generate_padding_mask, generate_future_mask, combine_padding_mask
 '''
     transformer应用于机器翻译
@@ -13,6 +14,7 @@ class MachineTranslation(nn.Module):
         super(MachineTranslation, self).__init__()
         self.source_embedding = nn.Embedding(source_vocab_dim, d_model)
         self.target_embedding = nn.Embedding(target_vocab_dim, d_model)
+        self.positional_encoding = PositionalEncoding(d_model)
         self.transformer = Transformer(d_model, n_head, n_encoder_layers, n_decoder_layers, d_feedforward, dropout)
         self.fc_out = nn.Linear(d_model, target_vocab_dim)
         self.dropout = nn.Dropout(dropout)
@@ -21,9 +23,12 @@ class MachineTranslation(nn.Module):
 
     def forward(self, source, target):
         # embedding
-        source_embedded = self.dropout(self.source_embedding(source) * math.sqrt(self.d_model))
-        target_embedded = self.dropout(self.target_embedding(target) * math.sqrt(self.d_model))
+        source_embedded = self.source_embedding(source) * math.sqrt(self.d_model)
+        target_embedded = self.target_embedding(target) * math.sqrt(self.d_model)
+
         # positional encoding
+        source_pe = self.positional_encoding(source_embedded)
+        target_pe = self.positional_encoding(target_embedded)
 
         # 生成mask
         source_padding_mask = generate_padding_mask(source, self.pad_token)
@@ -31,7 +36,7 @@ class MachineTranslation(nn.Module):
         target_future_mask = generate_future_mask(target.shape[1])
 
         # transformer层
-        transformer_output = self.transformer(source_embedded, target_embedded, source_padding_mask,
+        transformer_output = self.transformer(source_pe, target_pe, source_padding_mask,
                                               target_padding_mask, target_future_mask)
         # 没做softmax后面用cross-entropy
         output = self.fc_out(transformer_output)
