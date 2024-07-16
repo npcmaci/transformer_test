@@ -3,14 +3,14 @@ import torch.nn as nn
 import math
 from .transformer import Transformer
 from .positional_encoding import PositionalEncoding
-from utils import generate_padding_mask, generate_future_mask, combine_padding_mask
+from utils import generate_padding_mask, generate_future_mask
 '''
     transformer应用于机器翻译
 '''
 
 class MachineTranslation(nn.Module):
     def __init__(self, source_vocab_dim, target_vocab_dim, d_model, n_head, n_encoder_layers, n_decoder_layers, d_feedforward, pad_token,
-                 dropout=0.1):
+                 dropout=0.1, configs = None):
         super(MachineTranslation, self).__init__()
         self.source_embedding = nn.Embedding(source_vocab_dim, d_model)
         self.target_embedding = nn.Embedding(target_vocab_dim, d_model)
