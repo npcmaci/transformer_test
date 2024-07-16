@@ -3,6 +3,7 @@ from .multihead_attention_block import MultiheadAttentionBlock
 from .feedforward_block import FeedforwardBlock
 from utils import combine_padding_mask
 
+
 class TransformerDecoderLayer(nn.Module):
     def __init__(self, d_model, n_head, d_feedforward, dropout=0.1):
         super(TransformerDecoderLayer, self).__init__()
@@ -16,6 +17,7 @@ class TransformerDecoderLayer(nn.Module):
         output = self.feedforward(output)
 
         return output
+
 
 class TransformerDecoder(nn.Module):
     def __init__(self, d_model, n_head, n_decoder_layers, d_feedforward, dropout=0.1):

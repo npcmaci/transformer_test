@@ -8,6 +8,7 @@ from utils import generate_padding_mask, generate_future_mask
     transformer应用于机器翻译
 '''
 
+
 class MachineTranslation(nn.Module):
     def __init__(self, source_vocab_dim, target_vocab_dim, d_model, n_head, n_encoder_layers, n_decoder_layers, d_feedforward, pad_token,
                  dropout=0.1, configs={'use_padding_mask': None, 'use_shared_embedding': None}):
@@ -45,6 +46,5 @@ class MachineTranslation(nn.Module):
                                               target_padding_mask, target_future_mask)
         # 没做softmax后面用cross-entropy
         output = self.fc_out(transformer_output)
-
 
         return output

@@ -1,9 +1,11 @@
 import torch
 
+
 def generate_future_mask(size):
     future_mask = torch.triu(torch.ones(size, size, dtype=torch.bool), diagonal=1)
 
     return future_mask
+
 
 def generate_padding_mask(source, pad_token = 0):
     # (batch_size, 1, 1, seq_length)
@@ -16,6 +18,7 @@ def generate_padding_mask(source, pad_token = 0):
     padding_mask = padding_mask.expand(-1, -1, padding_mask.shape[3], -1)
 
     return padding_mask
+
 
 def combine_padding_mask(mask1, mask2):
     a = mask1[:, :, 0, :].unsqueeze(3)

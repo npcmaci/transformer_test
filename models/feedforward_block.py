@@ -4,6 +4,7 @@ import torch.nn as nn
     multihead层后的线性层
 '''
 
+
 class FeedforwardBlock(nn.Module):
     def __init__(self, d_model, d_feedforward, dropout=0.1):
         super(FeedforwardBlock, self).__init__()

@@ -7,6 +7,7 @@ from .transformer_encoder import TransformerEncoder
     transformer核心结构
 '''
 
+
 class Transformer(nn.Module):
     def __init__(self, d_model, n_head, n_encoder_layers, n_decoder_layers, d_feedforward, dropout = 0.1):
         super(Transformer, self).__init__()
