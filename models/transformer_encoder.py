@@ -4,10 +4,11 @@ from .feedforward_block import FeedforwardBlock
 
 
 class TransformerEncoderLayer(nn.Module):
-    def __init__(self, d_model, n_head, d_feedforward, dropout = 0.1):
+    def __init__(self, d_model, n_head, d_feedforward, dropout=0.1):
         super(TransformerEncoderLayer, self).__init__()
         self.self_attention = MultiheadAttentionBlock(d_model, n_head, dropout)
         self.feedforward = FeedforwardBlock(d_model, d_feedforward, dropout)
+
     def forward(self, source, source_padding_mask = None):
         output = self.self_attention(source, source, source, source_padding_mask)
         output = self.feedforward(output)
@@ -15,7 +16,7 @@ class TransformerEncoderLayer(nn.Module):
         return output
 
 class TransformerEncoder(nn.Module):
-    def __init__(self, d_model, n_head, n_encoder_layers, d_feedforward, dropout = 0.1):
+    def __init__(self, d_model, n_head, n_encoder_layers, d_feedforward, dropout=0.1):
         super(TransformerEncoder, self).__init__()
         self.encoder_layers = nn.ModuleList(
             TransformerEncoderLayer(d_model, n_head, d_feedforward, dropout) for _ in range(n_encoder_layers)
