@@ -9,7 +9,7 @@ class TransformerEncoderLayer(nn.Module):
         self.self_attention = MultiheadAttentionBlock(d_model, n_head, dropout)
         self.feedforward = FeedforwardBlock(d_model, d_feedforward, dropout)
 
-    def forward(self, source, source_padding_mask = None):
+    def forward(self, source, source_padding_mask=None):
         output = self.self_attention(source, source, source, source_padding_mask)
         output = self.feedforward(output)
 
@@ -23,7 +23,7 @@ class TransformerEncoder(nn.Module):
             TransformerEncoderLayer(d_model, n_head, d_feedforward, dropout) for _ in range(n_encoder_layers)
         )
 
-    def forward(self, source, source_padding_mask = None):
+    def forward(self, source, source_padding_mask=None):
         output = source
         for encoder_layer in self.encoder_layers:
             output = encoder_layer(source, source_padding_mask)

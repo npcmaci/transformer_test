@@ -22,8 +22,8 @@ class Transformer(nn.Module):
             if p.dim() > 1:
                 nn.init.xavier_uniform_(p)
 
-    def forward(self, source, target, source_padding_mask = None,
-                target_padding_mask = None, target_future_mask = None):
+    def forward(self, source, target, source_padding_mask=None,
+                target_padding_mask=None, target_future_mask=None):
         memory = self.encoder(source, source_padding_mask)
         output = self.decoder(memory, target, source_padding_mask, target_padding_mask, target_future_mask)
 
