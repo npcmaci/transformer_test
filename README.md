@@ -1,7 +1,7 @@
 ### 数据集引入
 #### 安装依赖
 ```commandline
-pip install transformers datasets
+pip install transformers datasets sentencepiece
 ```
 #### 数据预处理
 ```python
@@ -24,10 +24,9 @@ spm.SentencePieceTrainer.Train(
     '--model_prefix=bpe '
     '--vocab_size=37000 '
     '--model_type=bpe '
-    '--user_defined_symbols=<pad>,<s>,</s> '
-    '--control_symbols=<unk> '
-    '--remove_extra_whitespace=true '
+    '--bos_id=1 --eos_id=2 --unk_id=3 --pad_id=0 '
     '--character_coverage=0.9995 '
     '--shuffle_input_sentence=true'
 )
+# 最后将生成的BPE文件放到data文件夹下
 ```
