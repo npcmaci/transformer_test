@@ -11,9 +11,9 @@ class TransformerDecoderLayer(nn.Module):
         self.cross_attention = MultiheadAttentionBlock(d_model, n_head, dropout)
         self.feedforward = FeedforwardBlock(d_model, d_feedforward, dropout)
 
-    def forward(self, memory, target, memory_padding_mask = None, target_padding_mask = None, target_future_mask = None):
-        output = self.self_attention(target, target, target, combine_padding_mask(memory_padding_mask, target_padding_mask), target_future_mask)
-        output = self.cross_attention(output, memory, memory, memory_padding_mask)
+    def forward(self, memory, target, memory_padding_mask=None, target_padding_mask=None, target_future_mask=None):
+        output = self.self_attention(target, target, target, target_padding_mask, target_future_mask)
+        output = self.cross_attention(output, memory, memory, combine_padding_mask(memory_padding_mask, target_padding_mask))
         output = self.feedforward(output)
 
         return output

@@ -26,11 +26,11 @@ def byte_piece_encode(texts, sp, max_length, start_end_token=True):
             else:
                 encoded_text = encoded_text[:max_length]
         encoded_texts.append(encoded_text)
-    return np.array(encoded_texts)
+    return np.array(encoded_texts, dtype=np.int64)
 
 
 def one_hot_encode(indices, vocab_size):
-    one_hot = np.zeros((len(indices), vocab_size), dtype=np.float32)
+    one_hot = np.zeros((len(indices), vocab_size), dtype=np.int64)
     for i, index in enumerate(indices):
-        one_hot[i, index] = 1.0
+        one_hot[i, index] = 1
     return one_hot

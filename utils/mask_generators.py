@@ -7,7 +7,7 @@ def generate_future_mask(size):
     return future_mask
 
 
-def generate_padding_mask(source, pad_token = 0):
+def generate_padding_mask(source, pad_token=0):
     # (batch_size, 1, 1, seq_length)
     if source.dim() == 2:
         padding_mask = (source == pad_token).unsqueeze(1).unsqueeze(2)
@@ -21,7 +21,7 @@ def generate_padding_mask(source, pad_token = 0):
 
 
 def combine_padding_mask(mask1, mask2):
-    a = mask1[:, :, 0, :].unsqueeze(3)
+    a = mask1[:, :, 0, :].unsqueeze(2)
     c = a.expand(-1, -1, mask2.shape[-1], -1)
 
     return c

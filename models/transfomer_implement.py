@@ -40,7 +40,7 @@ class MachineTranslation(nn.Module):
         target_pe = self.positional_encoding(target_embedded)
 
         # 生成mask
-        if self.configs['use_padding_mask'] is not None and self['configs.use_padding_mask'] is True:
+        if self.configs['use_padding_mask'] is not None and self.configs['use_padding_mask'] is True:
             source_padding_mask = generate_padding_mask(source, self.pad_token).to(source.device)
             target_padding_mask = generate_padding_mask(target, self.pad_token).to(source.device)
         else:
